@@ -12,14 +12,20 @@ detector_name_use = "yunet"
 # dataset_name = "VGGFace-200k-train-51-180"
 # dataset_name = "VGGFace-200k-train-181-304"
 # dataset_name = "VGGFace-200k-train-305-430"
-dataset_name = "VGGFace-200k-train-431-502"
+# dataset_name = "VGGFace-200k-train-431-502"
+# dataset_name = "VGGFace-200k-images-in-test-set"
+# dataset_name = "VGGFace-200k-25-percent-of-images-in-train-set"
+dataset_name = "VGGFace-200k-rs-36-test-set"
 # dataset_name = "test-few-folders"
 # dataset_name = "LFW"
 
 os.environ["yunet_score_threshold"] = "0.1"
 
 
-embeddings_file = "<path-to-embeddings-file>"
+# embeddings_file = "larger_embedding_files\embeddings_FaceNet512_yunet_VGGFace200k-images-in-test-set.csv"
+# embeddings_file = "larger_embedding_files\embeddings_FaceNet512_yunet_VGGFace200k-25-percent-of-images-in-train-set.csv"
+embeddings_file = "larger_embedding_files\embeddings_Facenet512_yunet_VGGFace-200k-rs-36-test-set.csv"
+
 
 embeddings = {}
 with open(embeddings_file) as fileObject:
@@ -60,7 +66,7 @@ for i in range(0, len(mated_pairs)):
     mated_pairs[i].append(resp_obj)
 
 
-output_file_base = f".\\similarity_scores_{model_name_use}_{detector_name_use}_{dataset_name}.csv"
+output_file_base = f".\\similarity_score_files\\similarity_scores_{model_name_use}_{detector_name_use}_{dataset_name}.csv"
 output_file = output_file_base
 
 # If the file already exists, create unique name

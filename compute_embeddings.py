@@ -13,7 +13,11 @@ detector_name_use = "yunet"
 # dataset_name = "VGGFace-200k-train-181-304"
 # dataset_name = "VGGFace-200k-train-305-430"
 # dataset_name = "VGGFace-200k-train-431-502"
-dataset_name = "VGGFace-200k-train"
+# dataset_name = "VGGFace-200k-train"
+# dataset_name = "VGGFace-200k-rs-36-test-split1"
+# dataset_name = "VGGFace-200k-rs-36-test-split2"
+# dataset_name = "VGGFace-200k-rs-36-test-split3"
+dataset_name = "VGGFace-200k-rs-36-test-split4"
 # dataset_name = "test-few-folders"
 # dataset_name = "LFW"
 
@@ -21,24 +25,43 @@ dataset_name = "VGGFace-200k-train"
 # root_directory = 'C:\\Users\\admin\\Desktop\\aligned-VGGFace200k-folders-181-304'
 # root_directory = 'C:\\Users\\admin\\Desktop\\aligned-VGGFace200k-folders-305-430'
 # root_directory = 'C:\\Users\\admin\\Desktop\\aligned-VGGFace200k-folders-431-502'
-root_directory = 'C:\\Users\\admin\\Desktop\\aligned-VGGFace200k-folders'
+# root_directory = 'C:\\Users\\admin\\Desktop\\aligned-VGGFace200k-folders'
 # root_directory = 'C:\\Users\\admin\\Desktop\\test-few-folders'
 # root_directory = 'C:\\Users\\admin\\Downloads\\lfw\\lfw'
 # root_directory = 'C:\\Users\\admin\\Desktop\\lfw_sample'
+# root_directory = "C:\\Users\\admin\\Downloads\\archive1\\rs-36-test-set-split1"
+# root_directory = "C:\\Users\\admin\\Downloads\\archive1\\rs-36-test-set-split2"
+# root_directory = "C:\\Users\\admin\\Downloads\\archive1\\rs-36-test-set-split3"
+root_directory = "C:\\Users\\admin\\Downloads\\archive1\\rs-36-test-set-split4"
+
 
 os.environ["yunet_score_threshold"] = "0.1"
 
 persons = {}
 
 # assumes every image of a person is stored in a specific folder for that person (is set to only look for .jpg right now)
-for person_directory in os.listdir(root_directory):
-    persons[person_directory] = []
-    person_path = os.path.join(root_directory, person_directory)
-    for filename in os.listdir(person_path):
-        if filename.lower().endswith('.jpg'):
-            file_path = os.path.join(person_path, filename)
-            persons[person_directory].append(file_path.replace("\\", "/"))
+# for person_directory in os.listdir(root_directory):
+#     persons[person_directory] = []
+#     person_path = os.path.join(root_directory, person_directory)
+#     for filename in os.listdir(person_path):
+#         if filename.lower().endswith('.jpg'):
+#             file_path = os.path.join(person_path, filename)
+#             persons[person_directory].append(file_path.replace("\\", "/"))
+#             print(file_path)
+
+
+# assumes flat sctructure where filenames are prefixed with person identity
+for root, dirs, files in os.walk(root_directory): # then actually add the file paths
+    for file in files:
+        if file.lower().endswith('.jpg'):
+            person_id = file.split('-')[0]
+            if person_id not in persons:
+                persons[person_id] = []
+            file_path = os.path.join(root, file)
+            persons[person_id].append(file_path.replace("\\", "/"))
             print(file_path)
+
+
 
 # Check how many
 # count = 0
@@ -61,7 +84,7 @@ embedCounter = 0
 for person_name, image_paths in persons.items():
     # print("=======================================")
     # print(person_name)
-    output__person_file = f".\\embedding_files\\embeddings_{model_name_use}_{detector_name_use}_{dataset_name}_{person_name}.csv"
+    output__person_file = f".\\embedding-files-rs-36-test-set\\embeddings_{model_name_use}_{detector_name_use}_{dataset_name}_{person_name}.csv"
     embedding_files.append(output__person_file)
     with open(output__person_file, 'w', newline='') as output_csv:
         writer = csv.writer(output_csv, delimiter=';')

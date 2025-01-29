@@ -3,3 +3,10 @@
 /tf_gpu_python38/
 /larger_embedding_files/
 /similarity_score_files/
+/quality_score_files/
+/embedding-files-test-set/
+/embedding-files-rs-36-test-set/
+/embedding-files-50-images/
+/embedding-files-25-percent-of-train-set/
+/dissimilarity_and_quality_score_pairs/
+/CQM-and-dissimilarity-pairs/
