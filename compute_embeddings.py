@@ -5,52 +5,23 @@ import pandas as pd
 
 # based on:
 # https://sefiks.com/2020/05/22/fine-tuning-the-threshold-in-face-recognition/
+# Author: Gustav Nilsson Pedersen - s174562@dtu.dk
+# BASED ON CODE WRITTEN IN PREVIOUS COURSE
 
 model_name_use = "Facenet512"
 detector_name_use = "yunet"
 
-# dataset_name = "VGGFace-200k-train-51-180"
-# dataset_name = "VGGFace-200k-train-181-304"
-# dataset_name = "VGGFace-200k-train-305-430"
-# dataset_name = "VGGFace-200k-train-431-502"
-# dataset_name = "VGGFace-200k-train"
-# dataset_name = "VGGFace-200k-rs-36-test-split1"
-# dataset_name = "VGGFace-200k-rs-36-test-split2"
-# dataset_name = "VGGFace-200k-rs-36-test-split3"
-dataset_name = "VGGFace-200k-rs-36-test-split4"
-# dataset_name = "test-few-folders"
-# dataset_name = "LFW"
+dataset_name = "test-images-data-set"
 
-# root_directory = 'C:\\Users\\admin\\Desktop\\aligned-VGGFace200k-folders-51-180'
-# root_directory = 'C:\\Users\\admin\\Desktop\\aligned-VGGFace200k-folders-181-304'
-# root_directory = 'C:\\Users\\admin\\Desktop\\aligned-VGGFace200k-folders-305-430'
-# root_directory = 'C:\\Users\\admin\\Desktop\\aligned-VGGFace200k-folders-431-502'
-# root_directory = 'C:\\Users\\admin\\Desktop\\aligned-VGGFace200k-folders'
-# root_directory = 'C:\\Users\\admin\\Desktop\\test-few-folders'
-# root_directory = 'C:\\Users\\admin\\Downloads\\lfw\\lfw'
-# root_directory = 'C:\\Users\\admin\\Desktop\\lfw_sample'
-# root_directory = "C:\\Users\\admin\\Downloads\\archive1\\rs-36-test-set-split1"
-# root_directory = "C:\\Users\\admin\\Downloads\\archive1\\rs-36-test-set-split2"
-# root_directory = "C:\\Users\\admin\\Downloads\\archive1\\rs-36-test-set-split3"
-root_directory = "C:\\Users\\admin\\Downloads\\archive1\\rs-36-test-set-split4"
+root_directory = "test-images"
 
 
 os.environ["yunet_score_threshold"] = "0.1"
 
 persons = {}
 
-# assumes every image of a person is stored in a specific folder for that person (is set to only look for .jpg right now)
-# for person_directory in os.listdir(root_directory):
-#     persons[person_directory] = []
-#     person_path = os.path.join(root_directory, person_directory)
-#     for filename in os.listdir(person_path):
-#         if filename.lower().endswith('.jpg'):
-#             file_path = os.path.join(person_path, filename)
-#             persons[person_directory].append(file_path.replace("\\", "/"))
-#             print(file_path)
 
-
-# assumes flat sctructure where filenames are prefixed with person identity
+# assumes flat sctructure where filenames are prefixed with person identity. .jpg images only
 for root, dirs, files in os.walk(root_directory): # then actually add the file paths
     for file in files:
         if file.lower().endswith('.jpg'):
@@ -63,20 +34,6 @@ for root, dirs, files in os.walk(root_directory): # then actually add the file p
 
 
 
-# Check how many
-# count = 0
-# for key, values in identities.items():
-#     print(key)
-#     print(len(values))
-#     for i in range(0, len(values)):
-#         # print(values[i])
-#         count += 1
-
-# print(len(identities))
-# print(count)
-
-
-
 # ============== Compute embeddings =====================
 
 embedding_files = []
@@ -84,7 +41,7 @@ embedCounter = 0
 for person_name, image_paths in persons.items():
     # print("=======================================")
     # print(person_name)
-    output__person_file = f".\\embedding-files-rs-36-test-set\\embeddings_{model_name_use}_{detector_name_use}_{dataset_name}_{person_name}.csv"
+    output__person_file = f".\\embedding-person-files\\embeddings_{model_name_use}_{detector_name_use}_{dataset_name}_{person_name}.csv"
     embedding_files.append(output__person_file)
     with open(output__person_file, 'w', newline='') as output_csv:
         writer = csv.writer(output_csv, delimiter=';')
@@ -114,7 +71,7 @@ for person_name, image_paths in persons.items():
 
 
 
-output_file_base = f".\\embeddings_{model_name_use}_{detector_name_use}_{dataset_name}.csv"
+output_file_base = f".\\embedding-combined-files\\embeddings_{model_name_use}_{detector_name_use}_{dataset_name}.csv"
 output_file = output_file_base
 
 # If the file already exists, create unique name
@@ -129,12 +86,5 @@ combined_df = pd.concat([pd.read_csv(file, header=None) for file in embedding_fi
 # write to csv
 combined_df.to_csv(output_file, index=False, header=False)
 
-# === old version, I guess... ===
-# with open(output_file, 'w', newline='') as output_csv:
-#     writer = csv.writer(output_csv, delimiter=';')
-#     for identity, imagePaths in embeddings.items():
-#         for imagePath, embeddingDict in imagePaths.items():
-#             row = [identity] + [imagePath] + [embeddingDict["face_confidence"]] + embeddingDict["embedding"]
-#             writer.writerow(row)
 
 print("done computing embeddings")

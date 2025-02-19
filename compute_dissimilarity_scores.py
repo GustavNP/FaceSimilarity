@@ -3,28 +3,21 @@ import os
 import csv
 import pandas as pd
 
-# based on:
+# Loosely based on:
 # https://sefiks.com/2020/05/22/fine-tuning-the-threshold-in-face-recognition/
+# Author: Gustav Nilsson Pedersen - s174562@dtu.dk
+# BASED ON CODE WRITTEN IN PREVIOUS COURSE
 
 model_name_use = "Facenet512"
 detector_name_use = "yunet"
 
-# dataset_name = "VGGFace-200k-train-51-180"
-# dataset_name = "VGGFace-200k-train-181-304"
-# dataset_name = "VGGFace-200k-train-305-430"
-# dataset_name = "VGGFace-200k-train-431-502"
-# dataset_name = "VGGFace-200k-images-in-test-set"
-# dataset_name = "VGGFace-200k-25-percent-of-images-in-train-set"
-dataset_name = "VGGFace-200k-rs-36-test-set"
-# dataset_name = "test-few-folders"
-# dataset_name = "LFW"
+dataset_name = "test-images-data-set"
+
 
 os.environ["yunet_score_threshold"] = "0.1"
 
 
-# embeddings_file = "larger_embedding_files\embeddings_FaceNet512_yunet_VGGFace200k-images-in-test-set.csv"
-# embeddings_file = "larger_embedding_files\embeddings_FaceNet512_yunet_VGGFace200k-25-percent-of-images-in-train-set.csv"
-embeddings_file = "larger_embedding_files\embeddings_Facenet512_yunet_VGGFace-200k-rs-36-test-set.csv"
+embeddings_file = "embedding-combined-files\embeddings_Facenet512_yunet_test-images-data-set.csv"
 
 
 embeddings = {}
@@ -66,7 +59,7 @@ for i in range(0, len(mated_pairs)):
     mated_pairs[i].append(resp_obj)
 
 
-output_file_base = f".\\similarity_score_files\\similarity_scores_{model_name_use}_{detector_name_use}_{dataset_name}.csv"
+output_file_base = f".\\comparison-score-files\\dissimilarity_scores_{model_name_use}_{detector_name_use}_{dataset_name}.csv"
 output_file = output_file_base
 
 # If the file already exists, create unique name

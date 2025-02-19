@@ -1,0 +1,12 @@
+test-images/n000001-0004_01.jpg;test-images/n000001-0018_01.jpg;True;0.1487626417356882;0.3;Facenet512;cosine
+test-images/n000001-0004_01.jpg;test-images/n000001-0020_01.jpg;True;0.13916908145038887;0.3;Facenet512;cosine
+test-images/n000001-0004_01.jpg;test-images/n000001-0021_01.jpg;True;0.125321594319588;0.3;Facenet512;cosine
+test-images/n000001-0018_01.jpg;test-images/n000001-0020_01.jpg;True;0.16709035856892618;0.3;Facenet512;cosine
+test-images/n000001-0018_01.jpg;test-images/n000001-0021_01.jpg;True;0.1642312152472848;0.3;Facenet512;cosine
+test-images/n000001-0020_01.jpg;test-images/n000001-0021_01.jpg;True;0.11443303654557146;0.3;Facenet512;cosine
+test-images/n000005-0004_01.jpg;test-images/n000005-0005_01.jpg;True;0.2699014327653185;0.3;Facenet512;cosine
+test-images/n000005-0004_01.jpg;test-images/n000005-0009_01.jpg;True;0.1485577203694577;0.3;Facenet512;cosine
+test-images/n000005-0004_01.jpg;test-images/n000005-0018_01.jpg;True;0.20631221947577838;0.3;Facenet512;cosine
+test-images/n000005-0005_01.jpg;test-images/n000005-0009_01.jpg;True;0.2966134213266727;0.3;Facenet512;cosine
+test-images/n000005-0005_01.jpg;test-images/n000005-0018_01.jpg;True;0.2740820906321717;0.3;Facenet512;cosine
+test-images/n000005-0009_01.jpg;test-images/n000005-0018_01.jpg;True;0.19294122641080425;0.3;Facenet512;cosine
